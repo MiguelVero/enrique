@@ -214,18 +214,33 @@
         .ba-labels { position: absolute; bottom: 25px; width: 100%; display: flex; justify-content: space-between; padding: 0 25px; pointer-events: none; z-index: 5; }
         .ba-label { background: var(--secondary-navy); color: var(--white); padding: 8px 22px; border-radius: 30px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
 
-        .galeria-casos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 900px; margin: 0 auto 50px;}
-        .caso-item { position: relative; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow-soft); aspect-ratio: 4/3; cursor: zoom-in;}
-        .caso-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;}
+        .galeria-casos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 900px; margin: 0 auto 50px; align-items: start;}
+        
+        .caso-item { 
+            position: relative; 
+            border-radius: 25px; 
+            overflow: hidden; 
+            box-shadow: var(--shadow-soft); 
+            cursor: zoom-in;
+            background: var(--white);
+            border: 1px solid #f1f5f9;
+        }
+        .caso-item img { 
+            width: 100%; 
+            height: auto; 
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        
         .caso-item:hover img { transform: scale(1.08);}
-        .caso-titulo { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(27,54,93,0.95)); padding: 40px 25px 20px; color: var(--white); font-size: 16px; font-weight: 700;}
+        .caso-titulo { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(27,54,93,0.95)); padding: 40px 25px 20px; color: var(--white); font-size: 16px; font-weight: 700; text-align: center; z-index: 10;}
 
         /* ==========================================================================
-           10. VISTA 3: VIDEOS (NUEVO DISEÑO TIPO TELÉFONO / REELS)
+           10. VISTA 3: VIDEOS
            ========================================================================== */
         .video-grid { 
             display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* 3 columnas en PC */
+            grid-template-columns: repeat(3, 1fr); 
             gap: 30px; 
             padding: 0 0 50px; 
             max-width: 1000px; 
@@ -235,14 +250,14 @@
         .video-reel-card {
             position: relative;
             width: 100%;
-            aspect-ratio: 9/16; /* Formato vertical perfecto de celular */
+            aspect-ratio: 9/16; 
             border-radius: 30px;
             overflow: hidden;
             box-shadow: var(--shadow-soft);
             cursor: pointer;
             transition: var(--transition);
             background: #111;
-            border: 6px solid var(--white); /* Borde que simula el teléfono */
+            border: 6px solid var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -254,96 +269,33 @@
             border-color: var(--primary-teal-light);
         }
         
-        .reel-thumbnail {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
-        }
-        
-        .video-reel-card:hover .reel-thumbnail {
-            transform: scale(1.05);
-        }
+        .reel-thumbnail { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .video-reel-card:hover .reel-thumbnail { transform: scale(1.05); }
         
         .reel-overlay {
-            position: absolute;
-            inset: 0;
+            position: absolute; inset: 0;
             background: linear-gradient(to top, rgba(10, 17, 40, 0.9) 0%, rgba(10, 17, 40, 0.2) 50%, transparent 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 25px 20px;
-            color: var(--white);
-            z-index: 2;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 25px 20px; color: var(--white); z-index: 2;
         }
         
         .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 30px;
-            color: var(--white);
-            background: rgba(255,255,255,0.25);
-            backdrop-filter: blur(8px);
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: var(--transition);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            padding-left: 5px; /* Centrar ópticamente el icono de play */
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: var(--white);
+            background: rgba(255,255,255,0.25); backdrop-filter: blur(8px); width: 70px; height: 70px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); padding-left: 5px; 
         }
         
-        .video-reel-card:hover .play-icon {
-            background: var(--primary-teal);
-            transform: translate(-50%, -50%) scale(1.15);
-        }
-        
-        .reel-info h3 { 
-            font-size: 18px; 
-            font-weight: 800; 
-            margin-bottom: 6px; 
-            text-shadow: 0 2px 5px rgba(0,0,0,0.5); 
-            line-height: 1.2;
-        }
-        
-        .reel-info p { 
-            font-size: 13px; 
-            opacity: 0.9; 
-            font-weight: 500;
-        }
+        .video-reel-card:hover .play-icon { background: var(--primary-teal); transform: translate(-50%, -50%) scale(1.15); }
+        .reel-info h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); line-height: 1.2; }
+        .reel-info p { font-size: 13px; opacity: 0.9; font-weight: 500; }
 
-        /* Modal para Videos */
         .modal-video-content {
-            width: 100%;
-            max-width: 420px; /* Ancho máximo para no perder la forma de teléfono en PC */
-            aspect-ratio: 9/16;
-            background: #000;
-            border-radius: 25px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            transform: scale(0.9);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%; max-width: 420px; aspect-ratio: 9/16; background: #000; border-radius: 25px; overflow: hidden;
+            position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5); transform: scale(0.9); transition: var(--transition);
+            display: flex; align-items: center; justify-content: center;
         }
-        
-        .modal.active .modal-video-content {
-            transform: scale(1);
-        }
-
-        .modal-video-content video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Para que no se corte nada del video */
-            background: #000;
-            outline: none;
-        }
+        .modal.active .modal-video-content { transform: scale(1); }
+        .modal-video-content video { width: 100%; height: 100%; object-fit: contain; background: #000; outline: none; }
 
         /* ==========================================================================
            11. VISTA 4: LA CLÍNICA (MAPS Y CONTACTO)
@@ -398,15 +350,17 @@
         /* ==========================================================================
            14. MEDIA QUERIES (RESPONSIVE)
            ========================================================================== */
+        
+        /* Tablets y Laptops Pequeñas */
         @media (max-width: 1024px) {
             .grid { grid-template-columns: repeat(2, 1fr); }
             .features { grid-template-columns: repeat(2, 1fr); }
             .clinica-grid { grid-template-columns: 1fr; }
             .hero-text h2 { font-size: 48px; }
-            /* Ajuste de videos en tablet */
             .video-grid { grid-template-columns: repeat(2, 1fr); gap: 20px;}
         }
 
+        /* Teléfonos Horizontales y Tablets Pequeñas */
         @media (max-width: 768px) {
             .nav-links, .btn-citar-header { display: none; } 
             .menu-btn, .mobile-calendar-icon { display: block; font-size: 24px;}
@@ -431,13 +385,13 @@
             .section-title { font-size: 30px; line-height: 1.2;}
             
             .filters { justify-content: flex-start; padding: 0 15px 20px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;}
-            .filter-btn { padding: 10px 20px; font-size: 13px; }
+            .filter-btn { padding: 10px 20px; font-size: 13px; white-space: nowrap;}
 
             .grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px 40px; }
             .card { padding: 12px; border-radius: 20px; }
             .card-tag { top: 15px; left: 15px; font-size: 8px; padding: 5px 10px; }
-            .card-img { height: 130px; margin-bottom: 15px; border-radius: 14px;}
-            .card h3 { font-size: 14px; margin-bottom: 8px; line-height: 1.2;}
+            .card-img { height: 160px; margin-bottom: 15px; border-radius: 14px;}
+            .card h3 { font-size: 15px; margin-bottom: 8px; line-height: 1.2;}
             .card p { font-size: 11px; margin-bottom: 15px; line-height: 1.4; padding: 0;}
             .price-container { padding: 10px; margin-bottom: 12px; border-radius: 14px;}
             .price { font-size: 18px; }
@@ -450,10 +404,9 @@
             .ba-container { width: calc(100% - 30px); max-width: 100%; margin: 0 15px 40px; border-width: 5px; border-radius: 20px; aspect-ratio: 1/1;}
             .ba-slider-btn { width: 40px; height: 40px; font-size: 14px;}
             
-            .galeria-casos { grid-template-columns: 1fr; gap: 20px; padding: 0 15px 40px;}
+            .galeria-casos { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px 40px;}
             .caso-item { border-radius: 20px; }
             
-            /* Ajuste de videos en móvil */
             .video-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px 40px;}
             .video-reel-card { border-width: 3px; border-radius: 20px; }
             .reel-info h3 { font-size: 14px; }
@@ -475,11 +428,40 @@
             .modal-header { padding: 20px; }
         }
         
-        @media (max-width: 380px) {
-            .grid { grid-template-columns: 1fr; } 
-            .video-grid { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; } /* 1 columna en móviles muy pequeños */
+        /* Teléfonos Verticales Estándar y Estrechos (Honor X8b, iPhone, Samsung) */
+        /* MAGIA PRO PARA MÓVILES: 2 COLUMNAS (En pareja) PARA TODO */
+        @media (max-width: 500px) {
+            /* CATÁLOGO EN PAREJA */
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 10px 30px;}
+            .card { padding: 10px; border-radius: 16px; }
+            .card-tag { top: 8px; left: 8px; font-size: 7px; padding: 4px 6px; }
+            .card-img { height: 130px; margin-bottom: 10px; border-radius: 12px; }
+            .card h3 { font-size: 13px; margin-bottom: 5px; line-height: 1.2; }
+            .card p { font-size: 10px; margin-bottom: 10px; line-height: 1.3; }
+            .price-container { padding: 8px; margin-bottom: 10px; border-radius: 10px; }
+            .price { font-size: 15px; }
+            .price span { font-size: 8px; }
+            .btn-wa-card { padding: 8px 0; border-radius: 10px; }
+            .btn-wa-card span.text { font-size: 8px; margin-bottom: 2px; }
+            .btn-wa-card span.number { font-size: 11px; }
+
+            /* VIDEOS EN PAREJA */
+            .video-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 10px 30px; max-width: 100%;} 
+            .video-reel-card { border-width: 3px; border-radius: 16px; }
+            .reel-info h3 { font-size: 12px; }
+            .reel-info p { font-size: 10px; }
+            .play-icon { width: 40px; height: 40px; font-size: 16px; }
+
+            /* EXPERIENCIA (CASOS) EN PAREJA */
+            .galeria-casos { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 10px 30px;}
+            .caso-item { border-radius: 16px; }
+            .caso-titulo { padding: 30px 10px 15px; font-size: 12px; }
+
+            /* OTROS AJUSTES MÓVILES */
             .hero-text h2 { font-size: 32px; }
-            .splash-title { font-size: 28px; }
+            .splash-title { font-size: 30px; }
+            .section-title { font-size: 26px; }
+            .modal-form-content { width: 95%; } 
         }
     </style>
 </head>
@@ -572,7 +554,7 @@
                 <div class="card item-ortodoncia">
                     <div class="card-img" onclick="abrirModal(this)"><img src="Brackets (Ortodoncia).png" alt="Brackets Metálicos"></div>
                     <h3>Brackets (Ortodoncia)</h3>
-                    <p>Ortodoncia tradicional y efectiva para alinear tu sonrisa de forma segura.</p>
+                    <p>Ortodoncia tradicional y efectiva para alinear tu sonrisa.</p>
                     <div class="price-container"><div class="price">S/ 500 <span>(Inicial)</span></div></div>
                     <button onclick="abrirModalCita('Ortodoncia (Brackets)')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -583,7 +565,7 @@
                 <div class="card item-estetica">
                     <div class="card-img" onclick="abrirModal(this)"><img src="Curación con Resina.png" alt="Curación con Resina"></div>
                     <h3>Curación con Resina</h3>
-                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <p>Carillas estéticas de alta gama computarizadas.</p>
                     <div class="price-container"><div class="price">S/ 50 <span>(Desde)</span></div></div>
                     <button onclick="abrirModalCita('Curación con Resina')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -594,7 +576,7 @@
                 <div class="card item-estetica">
                     <div class="card-img" onclick="abrirModal(this)"><img src="Blanqueamiento.png" alt="Blanqueamiento"></div>
                     <h3>Blanqueamiento</h3>
-                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <p>Carillas estéticas de alta gama computarizadas.</p>
                     <div class="price-container"><div class="price">S/ 100 <span>(Desde)</span></div></div>
                     <button onclick="abrirModalCita('Blanqueamiento')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -604,8 +586,8 @@
 
                 <div class="card item-estetica">
                     <div class="card-img" onclick="abrirModal(this)"><img src="Endodoncia c  especializado.png" alt="Endodoncia"></div>
-                    <h3>Endodoncia c/ especializado</h3>
-                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <h3>Endodoncia Especializada</h3>
+                    <p>Tratamientos seguros con especialistas capacitados.</p>
                     <div class="price-container"><div class="price">S/ 300 <span>(Desde)</span></div></div>
                     <button onclick="abrirModalCita('Endodoncia')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -615,8 +597,8 @@
 
                 <div class="card item-estetica">
                     <div class="card-img" onclick="abrirModal(this)"><img src="Extracción dental sin dolor.png" alt="Extracción"></div>
-                    <h3>Extracción dental sin Dolor</h3>
-                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <h3>Extracción sin Dolor</h3>
+                    <p>Procedimientos seguros y sin dolor garantizado.</p>
                     <div class="price-container"><div class="price">S/ 50 <span>(Desde)</span></div></div>
                     <button onclick="abrirModalCita('Extracción')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -626,8 +608,8 @@
 
                 <div class="card item-estetica">
                     <div class="card-img" onclick="abrirModal(this)"><img src="Limpieza Dental.png" alt="Limpieza Dental"></div>
-                    <h3>Limpieza Dental Profunda</h3>
-                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <h3>Limpieza Profunda</h3>
+                    <p>Profilaxis completa para mantener tu salud oral al 100%.</p>
                     <div class="price-container"><div class="price">S/ 150 <span>(Desde)</span></div></div>
                     <button onclick="abrirModalCita('Limpieza Dental')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -637,8 +619,8 @@
 
                 <div class="card item-estetica">
                     <div class="card-img" onclick="abrirModal(this)"><img src="Odontopediatría (Atención para niños).jpg" alt="Odontopediatría"></div>
-                    <h3>Odontopediatría (Atención para niños)</h3>
-                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <h3>Odontopediatría</h3>
+                    <p>Cuidado especial, paciente y seguro para los más pequeños.</p>
                     <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
                     <button onclick="abrirModalCita('Odontopediatría')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -649,7 +631,7 @@
                 <div class="card item-estetica">
                     <div class="card-img" onclick="abrirModal(this)"><img src="protesis dental.jpg" alt="Prótesis Estética"></div>
                     <h3>Prótesis Estética</h3>
-                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <p>Rehabilitación oral avanzada para una sonrisa natural.</p>
                     <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
                     <button onclick="abrirModalCita('Prótesis Estética')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -660,7 +642,7 @@
                 <div class="card item-estetica">
                     <div class="card-img" onclick="abrirModal(this)"><img src="DISENO-DE-SONRISA.webp" alt="Diseño de Sonrisa"></div>
                     <h3>Diseño de Sonrisa</h3>
-                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <p>Transformación total y personalizada de tu rostro.</p>
                     <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
                     <button onclick="abrirModalCita('Diseño de Sonrisa')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -669,9 +651,9 @@
                 </div>
 
                 <div class="card item-estetica">
-                    <div class="card-img" onclick="abrirModal(this)"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=500&q=80" alt="Blanqueamiento Láser"></div>
+                    <div class="card-img" onclick="abrirModal(this)"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=500&q=80" alt="Implantes"></div>
                     <h3>Implantes Dentales</h3>
-                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <p>Reemplazo dental permanente y 100% estético.</p>
                     <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
                     <button onclick="abrirModalCita('Implantes Dentales')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
@@ -700,16 +682,23 @@
 
             <div class="galeria-casos reveal">
                 <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia Estética">
-                    <div class="caso-titulo">Ortodoncia Estética</div>
+                    <img src="dental11.png" alt="Ortodoncia Estética">
+                    <div class="caso-titulo">Protesis Dental </div>
                 </div>
                 <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia Estética">
-                    <div class="caso-titulo">Ortodoncia Estética</div>
+                    <img src="dental12.3.png" alt="Ortodoncia Estética">
+                    
+                    <div class="caso-titulo">Ortodoncia </div>
                 </div>
+
                 <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="Rehabilitación Oral.jpg" alt="Rehabilitación Oral">
-                    <div class="caso-titulo">Rehabilitación Oral</div>
+                    <img src="dental13.png" alt="Ortodoncia Estética">
+                    <div class="caso-titulo">Curación Dental</div>
+                </div>
+
+                <div class="caso-item" onclick="abrirModal(this)">
+                    <img src="dental14.png" alt="Rehabilitación Oral">
+                    <div class="caso-titulo">Limpiza Dental</div>
                 </div>
             </div>
         </div>
@@ -731,28 +720,30 @@
                         <div class="play-icon"><i class="fa-solid fa-play"></i></div>
                         <div class="reel-info">
                             <h3>Diseño de Sonrisa</h3>
-                            <p>Proceso en vivo</p>
+                            <p>De Ortodoncia</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="video-reel-card" onclick="abrirModalVideo('video 2.mp4')">
                     <img src="imagen2.png" alt="Carillas de Resina" class="reel-thumbnail" onerror="this.src='https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=500&q=80'">
+                    
                     <div class="reel-overlay">
                         <div class="play-icon"><i class="fa-solid fa-play"></i></div>
                         <div class="reel-info">
-                            <h3>Carillas Dentales</h3>
-                            <p>Transformación real</p>
+                            <h3>Reconstrución Dental</h3>
+                            <p>Transformación</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="video-reel-card" onclick="abrirModalVideo('video3.mp4')">
                     <img src="imagen3.png" alt="Blanqueamiento" class="reel-thumbnail" onerror="this.src='https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=500&q=80'">
+                    
                     <div class="reel-overlay">
                         <div class="play-icon"><i class="fa-solid fa-play"></i></div>
                         <div class="reel-info">
-                            <h3>Blanqueamiento Láser</h3>
+                            <h3>Carillar Dentales</h3>
                             <p>Resultados inmediatos</p>
                         </div>
                     </div>
@@ -760,11 +751,12 @@
 
                 <div class="video-reel-card" onclick="abrirModalVideo('video4.mp4')">
                     <img src="imagen4.png" alt="Tecnología Dental" class="reel-thumbnail" onerror="this.src='https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=500&q=80'">
+                    
                     <div class="reel-overlay">
                         <div class="play-icon"><i class="fa-solid fa-play"></i></div>
                         <div class="reel-info">
                             <h3>Alta Tecnología</h3>
-                            <p>Equipos de vanguardia</p>
+                            <p>Equipos De Implantes</p>
                         </div>
                     </div>
                 </div>
