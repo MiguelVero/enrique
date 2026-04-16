@@ -41,7 +41,6 @@
         
         h1, h2, h3, .font-serif { font-family: 'Marcellus', serif; }
         
-        /* Contenedor principal para Computadoras */
         .container { 
             max-width: 1200px; 
             margin: 0 auto; 
@@ -50,7 +49,7 @@
         }
 
         /* ==========================================================================
-           3. SISTEMA DE VISTAS (SPA) Y ANIMACIONES
+           3. SISTEMA DE VISTAS Y ANIMACIONES (MODO PRO)
            ========================================================================== */
         .vista-app {
             display: none; 
@@ -66,6 +65,16 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ==========================================================================
            4. SPLASH SCREEN (PANTALLA DE CARGA)
            ========================================================================== */
@@ -73,7 +82,7 @@
             position: fixed; inset: 0; z-index: 999999;
             background: linear-gradient(135deg, #ffffff 0%, #e8f6f8 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.6s ease;
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.8s ease;
         }
         #splash-screen.slide-up { transform: translateY(-100%); opacity: 0; pointer-events: none; }
 
@@ -99,7 +108,10 @@
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(27, 54, 93, 0.05); position: sticky; top: 0; z-index: 100; 
             width: 100%; padding: 15px 0; border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            transform: translateY(-100%); transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
+        body.loaded header { transform: translateY(0); }
+
         nav { display: flex; justify-content: space-between; align-items: center; }
         
         .logo { display: flex; flex-direction: column; align-items: center; text-decoration: none; cursor: pointer; transition: var(--transition);}
@@ -132,24 +144,32 @@
         .close-menu-btn { position: absolute; top: 25px; right: 25px; font-size: 30px; color: var(--secondary-navy); border: none; background: transparent; cursor: pointer;}
 
         /* ==========================================================================
-           7. ESTILOS COMPARTIDOS (TÍTULOS DE SECCIÓN)
+           7. ESTILOS COMPARTIDOS
            ========================================================================== */
         .section-header { text-align: center; margin-bottom: 50px; padding-top: 30px;}
         .section-subtitle { color: var(--accent-gold); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px;}
         .section-title { font-size: 38px; color: var(--secondary-navy); font-weight: 800; }
 
         /* ==========================================================================
-           8. VISTA 1: INICIO Y CATÁLOGO (DISEÑO ESCRITORIO BASE)
+           8. VISTA 1: INICIO Y CATÁLOGO
            ========================================================================== */
-        .hero { display: flex; align-items: center; justify-content: space-between; padding: 60px 0; gap: 50px;}
-        .hero-text { flex: 1; }
+        .hero { display: flex; align-items: center; justify-content: space-between; padding: 60px 0; gap: 50px; position: relative; z-index: 1; perspective: 1000px; }
+        .parallax-bg-shape { position: absolute; top: 0; right: 10%; width: 500px; height: 500px; background: radial-gradient(circle, var(--primary-teal-light) 0%, transparent 65%); border-radius: 50%; z-index: -1; pointer-events: none; transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .hero-text { flex: 1; transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); opacity: 0; transform: translateX(-40px); }
+        body.loaded .hero-text { animation: textRevealPro 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards; }
         .hero-badge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; background: rgba(197, 160, 89, 0.1); color: var(--accent-gold); border-radius: 30px; font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1.5px; }
         .hero-text h2 { font-size: 58px; color: var(--secondary-navy); line-height: 1.1; margin-bottom: 25px; font-weight: 800;}
         .hero-text h2 span { color: var(--primary-teal); }
         .hero-text p { font-size: 17px; color: var(--text-gray); margin-bottom: 0; line-height: 1.8;}
         
-        .hero-image { flex: 1; position: relative; display: flex; justify-content: flex-end;}
-        .hero-image img { width: 100%; max-width: 550px; border-radius: 40px; box-shadow: var(--shadow-hover); object-fit: cover; }
+        .hero-image-wrapper { flex: 1; display: flex; justify-content: flex-end; position: relative; }
+        .hero-image { position: relative; width: 100%; max-width: 550px; transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); opacity: 0; transform: scale(0.9) translateY(40px); filter: blur(10px); }
+        body.loaded .hero-image { animation: imageRevealPro 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards; }
+        .hero-image img { width: 100%; border-radius: 40px; box-shadow: var(--shadow-hover); object-fit: cover; animation: floatElegante 6s ease-in-out infinite; }
+
+        @keyframes textRevealPro { to { opacity: 1; transform: translateX(0); } }
+        @keyframes imageRevealPro { to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } }
+        @keyframes floatElegante { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(27, 54, 93, 0.15); } 100% { transform: translateY(0px); } }
 
         .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 30px; padding-bottom: 50px;}
         .feature-box { background: var(--white); border-radius: 30px; padding: 40px 25px; text-align: center; box-shadow: var(--shadow-soft); transition: var(--transition); border: 1px solid #f1f5f9;}
@@ -158,33 +178,25 @@
         .feature-box h4 { font-size: 18px; color: var(--secondary-navy); margin-bottom: 10px; font-weight: 800; }
         .feature-box p { font-size: 14px; color: var(--text-gray); line-height: 1.6; }
 
-        /* Filtros */
         .filters { display: flex; gap: 15px; justify-content: center; margin-top: 30px; margin-bottom: 40px; flex-wrap: wrap;}
         .filter-btn { background: var(--white); border: 1px solid #e2e8f0; padding: 12px 28px; font-size: 14px; font-weight: 700; color: var(--text-gray); cursor: pointer; border-radius: 30px; transition: var(--transition); box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .filter-btn:hover { border-color: var(--secondary-navy); color: var(--secondary-navy); }
         .filter-btn.active { background-color: var(--secondary-navy); color: var(--white); border-color: var(--secondary-navy); box-shadow: 0 8px 20px rgba(27, 54, 93, 0.2);}
 
-        /* Grid del Catálogo (4 Columnas en PC) */
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; padding-bottom: 50px;}
-        
         .card { background: var(--white); border-radius: 28px; padding: 20px; box-shadow: var(--shadow-soft); border: 1px solid #f1f5f9; display: flex; flex-direction: column; position: relative; transition: var(--transition);}
         .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: var(--primary-teal-light);}
         .card.hide { display: none; }
-        
         .card-tag { position: absolute; top: 35px; left: 35px; background: var(--white); color: var(--secondary-navy); font-size: 10px; font-weight: 800; padding: 8px 16px; border-radius: 20px; z-index: 2; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 6px;}
         .card-tag::before { content: ''; display: block; width: 6px; height: 6px; background: var(--primary-teal); border-radius: 50%;}
-        
         .card-img { width: 100%; height: 220px; border-radius: 20px; overflow: hidden; margin-bottom: 20px; background: #f8fafc; cursor: zoom-in;}
         .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;}
         .card:hover .card-img img { transform: scale(1.08);}
-        
         .card h3 { font-size: 19px; color: var(--secondary-navy); margin-bottom: 10px; font-weight: 800; text-align: center;}
         .card p { font-size: 13px; color: var(--text-gray); margin-bottom: 25px; text-align: center; flex-grow: 1; line-height: 1.6; padding: 0 10px;}
-        
         .price-container { border-radius: 20px; padding: 15px; margin-bottom: 20px; text-align: center; border: 1px dashed #cbd5e1; background: #f8fafc;}
         .price { font-size: 24px; font-weight: 800; color: var(--accent-gold); display: flex; justify-content: center; align-items: baseline; gap: 5px;}
         .price span { font-size: 11px; font-weight: 700; color: var(--text-gray); text-transform: uppercase; }
-        
         .btn-wa-card { background: var(--secondary-navy); color: var(--white); border: none; cursor: pointer; padding: 15px 0; border-radius: 16px; display: flex; flex-direction: column; align-items: center; width: 100%; transition: var(--transition);}
         .btn-wa-card:hover { background: var(--primary-teal); box-shadow: 0 8px 25px rgba(77, 184, 184, 0.3);}
         .btn-wa-card:active { transform: scale(0.96); }
@@ -209,16 +221,129 @@
         .caso-titulo { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(27,54,93,0.95)); padding: 40px 25px 20px; color: var(--white); font-size: 16px; font-weight: 700;}
 
         /* ==========================================================================
-           10. VISTA 3: VIDEOS
+           10. VISTA 3: VIDEOS (NUEVO DISEÑO TIPO TELÉFONO / REELS)
            ========================================================================== */
-        .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; padding: 0 0 50px; max-width: 1000px; margin: 0 auto;}
-        .video-card { background: var(--white); padding: 20px; border-radius: 30px; box-shadow: var(--shadow-soft); border: 1px solid #f1f5f9; transition: var(--transition);}
-        .video-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover);}
-        .video-wrapper { position: relative; width: 100%; border-radius: 20px; overflow: hidden; background: #000; aspect-ratio: 16/9; }
-        .video-wrapper video { width: 100%; height: 100%; object-fit: cover; outline: none; }
-        .video-info { padding: 25px 15px 10px; text-align: center; }
-        .video-info h3 { font-size: 20px; color: var(--secondary-navy); font-weight: 800; margin-bottom: 8px;}
-        .video-info p { font-size: 14px; color: var(--text-gray); line-height: 1.6;}
+        .video-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); /* 3 columnas en PC */
+            gap: 30px; 
+            padding: 0 0 50px; 
+            max-width: 1000px; 
+            margin: 0 auto;
+        }
+        
+        .video-reel-card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9/16; /* Formato vertical perfecto de celular */
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            transition: var(--transition);
+            background: #111;
+            border: 6px solid var(--white); /* Borde que simula el teléfono */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-reel-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--primary-teal-light);
+        }
+        
+        .reel-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .video-reel-card:hover .reel-thumbnail {
+            transform: scale(1.05);
+        }
+        
+        .reel-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 17, 40, 0.9) 0%, rgba(10, 17, 40, 0.2) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px 20px;
+            color: var(--white);
+            z-index: 2;
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            color: var(--white);
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(8px);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            padding-left: 5px; /* Centrar ópticamente el icono de play */
+        }
+        
+        .video-reel-card:hover .play-icon {
+            background: var(--primary-teal);
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+        
+        .reel-info h3 { 
+            font-size: 18px; 
+            font-weight: 800; 
+            margin-bottom: 6px; 
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5); 
+            line-height: 1.2;
+        }
+        
+        .reel-info p { 
+            font-size: 13px; 
+            opacity: 0.9; 
+            font-weight: 500;
+        }
+
+        /* Modal para Videos */
+        .modal-video-content {
+            width: 100%;
+            max-width: 420px; /* Ancho máximo para no perder la forma de teléfono en PC */
+            aspect-ratio: 9/16;
+            background: #000;
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active .modal-video-content {
+            transform: scale(1);
+        }
+
+        .modal-video-content video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Para que no se corte nada del video */
+            background: #000;
+            outline: none;
+        }
 
         /* ==========================================================================
            11. VISTA 4: LA CLÍNICA (MAPS Y CONTACTO)
@@ -236,9 +361,8 @@
         .map-container iframe { width: 100%; height: 100%; border: 0; }
 
         /* ==========================================================================
-           12. MODALES (IMAGEN Y FORMULARIO DE CITAS)
+           12. MODALES (IMAGEN, VIDEO Y FORMULARIO)
            ========================================================================== */
-        /* MODAL IMÁGENES */
         .modal { position: fixed; inset: 0; background: rgba(10, 17, 40, 0.95); backdrop-filter: blur(8px); z-index: 100000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
         .modal.active { opacity: 1; pointer-events: all; }
         .modal-content { max-width: 90vw; max-height: 85vh; border-radius: 20px; border: 2px solid rgba(255,255,255,0.1); object-fit: contain; transform: scale(0.9); transition: var(--transition); }
@@ -246,7 +370,6 @@
         .close-modal { position: absolute; top: 30px; right: 30px; width: 50px; height: 50px; z-index: 100001; background: rgba(255,255,255,0.1); border: none; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 22px; cursor: pointer; transition: var(--transition);}
         .close-modal:hover { background: #ef4444; transform: rotate(90deg);}
 
-        /* MODAL CITAS */
         .modal-form-overlay { position: fixed; inset: 0; background: rgba(27, 54, 93, 0.85); backdrop-filter: blur(10px); z-index: 100000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
         .modal-form-overlay.active { opacity: 1; pointer-events: all; }
         .modal-form-content { background: var(--white); width: 100%; max-width: 480px; border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); transform: translateY(30px) scale(0.95); transition: var(--transition); overflow: hidden; }
@@ -269,85 +392,75 @@
            ========================================================================== */
         .btn-flotante { position: fixed; bottom: 30px; right: 30px; background: var(--whatsapp); color: var(--white); width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 35px; box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4); z-index: 99; cursor: pointer; animation: pulseWa 2s infinite; transition: var(--transition);}
         .btn-flotante:hover { transform: scale(1.1); }
-        @keyframes pulseWa { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
-
+        
         footer { background: var(--secondary-navy); color: var(--white); text-align: center; padding: 30px 20px; font-size: 14px; font-weight: 500; width: 100%; border-radius: 30px 30px 0 0;}
 
         /* ==========================================================================
-           14. MEDIA QUERIES - RESPONSIVE EXPERTO (CELULARES Y TABLETS)
+           14. MEDIA QUERIES (RESPONSIVE)
            ========================================================================== */
-        
-        /* Tablets (hasta 1024px) */
         @media (max-width: 1024px) {
             .grid { grid-template-columns: repeat(2, 1fr); }
             .features { grid-template-columns: repeat(2, 1fr); }
             .clinica-grid { grid-template-columns: 1fr; }
             .hero-text h2 { font-size: 48px; }
+            /* Ajuste de videos en tablet */
+            .video-grid { grid-template-columns: repeat(2, 1fr); gap: 20px;}
         }
 
-        /* Celulares (hasta 768px) -> ORDENADO, CENTRADO Y PERFECTO */
         @media (max-width: 768px) {
-            /* Ocultar elementos de escritorio, mostrar los de móvil */
             .nav-links, .btn-citar-header { display: none; } 
             .menu-btn, .mobile-calendar-icon { display: block; font-size: 24px;}
             header { padding: 15px 0; }
             .logo h1 { font-size: 22px; }
             
-            /* HERO MÓVIL: Apilado y centrado */
             .hero { flex-direction: column; text-align: center; padding: 30px 15px 10px; width: 100%; gap: 30px;}
             .hero-text h2 { font-size: 38px; line-height: 1.2; margin-bottom: 20px;}
-            .hero-image { width: 100%; justify-content: center;}
-            .hero-image img { border-width: 6px; max-width: 100%; border-radius: 30px;}
             
-            /* FEATURES MÓVIL: 1 Columna */
+            .hero-text, .hero-image { opacity: 1; transform: none; filter: none; animation: none; }
+            body.loaded .hero-text, body.loaded .hero-image { animation: none; }
+            
+            .hero-image-wrapper { width: 100%; justify-content: center;}
+            .hero-image { max-width: 100%; opacity: 1; transform: none; filter: none;}
+            .hero-image img { border-width: 6px; border-radius: 30px; animation: none;} 
+            .parallax-bg-shape { width: 300px; height: 300px; right: auto; left: 50%; transform: translateX(-50%); }
+            
             .features { grid-template-columns: 1fr; gap: 20px; padding: 0 15px 30px;}
             .feature-box { padding: 30px 20px; border-radius: 20px;}
             
-            /* TÍTULOS DE SECCIÓN MÓVIL */
             .section-header { margin-bottom: 30px; padding-top: 10px;}
             .section-title { font-size: 30px; line-height: 1.2;}
             
-            /* FILTROS MÓVIL: Desplazamiento horizontal suave */
             .filters { justify-content: flex-start; padding: 0 15px 20px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;}
             .filter-btn { padding: 10px 20px; font-size: 13px; }
 
-            /* CATÁLOGO MÓVIL: EXACTAMENTE 2 COLUMNAS COMO TU IMAGEN */
-            .grid { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 15px; 
-                padding: 0 15px 40px; 
-            }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px 40px; }
             .card { padding: 12px; border-radius: 20px; }
             .card-tag { top: 15px; left: 15px; font-size: 8px; padding: 5px 10px; }
             .card-img { height: 130px; margin-bottom: 15px; border-radius: 14px;}
             .card h3 { font-size: 14px; margin-bottom: 8px; line-height: 1.2;}
-            
-            /* Descripción resumida en móvil para no romper la altura */
             .card p { font-size: 11px; margin-bottom: 15px; line-height: 1.4; padding: 0;}
-            
             .price-container { padding: 10px; margin-bottom: 12px; border-radius: 14px;}
             .price { font-size: 18px; }
             .price span { font-size: 9px; }
             
-            /* Botón "Reserva tu cita" perfectamente encajado en 2 columnas */
             .btn-wa-card { padding: 10px 0; border-radius: 12px;}
             .btn-wa-card span.text { font-size: 9px; margin-bottom: 3px;}
             .btn-wa-card span.number { font-size: 12px; gap: 5px;}
             
-            /* EXPERIENCIA ANTES/DESPUÉS MÓVIL: Cuadrado perfecto */
             .ba-container { width: calc(100% - 30px); max-width: 100%; margin: 0 15px 40px; border-width: 5px; border-radius: 20px; aspect-ratio: 1/1;}
             .ba-slider-btn { width: 40px; height: 40px; font-size: 14px;}
             
-            /* GALERÍA DE CASOS MÓVIL: 1 Columna */
             .galeria-casos { grid-template-columns: 1fr; gap: 20px; padding: 0 15px 40px;}
             .caso-item { border-radius: 20px; }
             
-            /* VIDEOS MÓVIL: 1 Columna */
-            .video-grid { grid-template-columns: 1fr; gap: 25px; padding: 0 15px 40px;}
-            .video-card { padding: 15px; border-radius: 24px;}
-            .video-wrapper { border-radius: 14px;}
+            /* Ajuste de videos en móvil */
+            .video-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px 40px;}
+            .video-reel-card { border-width: 3px; border-radius: 20px; }
+            .reel-info h3 { font-size: 14px; }
+            .reel-info p { font-size: 11px; }
+            .play-icon { width: 50px; height: 50px; font-size: 20px; }
+            .modal-video-content { max-width: 85vw; max-height: 85vh; border-radius: 15px;}
             
-            /* CLÍNICA MÓVIL: Apilado y centrado */
             .clinica-grid { grid-template-columns: 1fr; gap: 30px; padding: 0 15px 40px;}
             .map-container { height: 350px; min-height: 350px; border-radius: 24px; border-width: 5px;}
             
@@ -356,16 +469,15 @@
             .info-item { flex-direction: column; gap: 12px; margin-bottom: 25px; justify-content: center; width: 100%;}
             .info-icon { margin: 0 auto; width: 50px; height: 50px; font-size: 22px;}
             
-            /* Ajustes finales móvil */
             .btn-flotante { width: 55px; height: 55px; font-size: 30px; bottom: 20px; right: 20px; }
             footer { border-radius: 0; padding: 25px 15px; font-size: 12px;}
             .form-body { padding: 25px 20px;}
             .modal-header { padding: 20px; }
         }
         
-        /* Ajuste extremo para teléfonos muy pequeños (ej: iPhone SE) */
         @media (max-width: 380px) {
-            .grid { grid-template-columns: 1fr; } /* Si la pantalla es enana, pasa a 1 columna para que no se rompa */
+            .grid { grid-template-columns: 1fr; } 
+            .video-grid { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; } /* 1 columna en móviles muy pequeños */
             .hero-text h2 { font-size: 32px; }
             .splash-title { font-size: 28px; }
         }
@@ -414,18 +526,21 @@
 
     <div id="vista-inicio" class="vista-app activa">
         <section class="hero container">
+            <div class="parallax-bg-shape"></div> 
             <div class="hero-text">
                 <div class="hero-badge"><i class="fa-solid fa-award"></i> Odontología Premium</div>
                 <h2>LA EXCELENCIA<br>EN <span>TU SONRISA</span></h2>
                 <p>Descubre la tecnología avanzada y la experiencia profesional que tus dientes merecen en Clínica Manchay. Diseñamos sonrisas perfectas con resultados comprobados.</p>
             </div>
-            <div class="hero-image">
-                <img src="enrique.png" alt="Consulta Odontológica">
+            <div class="hero-image-wrapper">
+                <div class="hero-image">
+                    <img src="enrique.png" alt="Consulta Odontológica">
+                </div>
             </div>
         </section>
 
         <section class="container">
-            <div class="features">
+            <div class="features reveal">
                 <div class="feature-box">
                     <div class="feature-icon"><i class="fa-solid fa-microscope"></i></div>
                     <h4>Alta Tecnología</h4>
@@ -445,105 +560,98 @@
         </section>
 
         <div class="container">
-            <div class="filters">
+            <div class="filters reveal">
                 <button class="filter-btn active" onclick="filterCatalog('todo')">Todos los Servicios</button>
                 <button class="filter-btn" onclick="filterCatalog('ortodoncia')">Ortodoncia</button>
                 <button class="filter-btn" onclick="filterCatalog('estetica')">Estética Dental</button>
                 <button class="filter-btn" onclick="filterCatalog('general')">Odontología General</button>
             </div>
 
-            <div class="grid" id="catalog-grid">
+            <div class="grid reveal" id="catalog-grid">
                 
                 <div class="card item-ortodoncia">
-                    
                     <div class="card-img" onclick="abrirModal(this)"><img src="Brackets (Ortodoncia).png" alt="Brackets Metálicos"></div>
                     <h3>Brackets (Ortodoncia)</h3>
                     <p>Ortodoncia tradicional y efectiva para alinear tu sonrisa de forma segura.</p>
-                    <div class="price-container"><div class="price">S/ 150 <span>(Inicial)</span></div></div>
+                    <div class="price-container"><div class="price">S/ 500 <span>(Inicial)</span></div></div>
                     <button onclick="abrirModalCita('Ortodoncia (Brackets)')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
                         <span class="number"><i class="fa-regular fa-calendar-check"></i> Reserva tu Cita</span>
                     </button>
                 </div>
 
-                
-
                 <div class="card item-estetica">
-                    <div class="card-img" onclick="abrirModal(this)"><img src="Curación con Resina.png" alt="Diseño de Sonrisa"></div>
+                    <div class="card-img" onclick="abrirModal(this)"><img src="Curación con Resina.png" alt="Curación con Resina"></div>
                     <h3>Curación con Resina</h3>
                     <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
-                    <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
-                    <button onclick="abrirModalCita('Diseño de Sonrisa')" class="btn-wa-card">
+                    <div class="price-container"><div class="price">S/ 50 <span>(Desde)</span></div></div>
+                    <button onclick="abrirModalCita('Curación con Resina')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
                         <span class="number"><i class="fa-regular fa-calendar-check"></i> Reserva tu Cita</span>
                     </button>
                 </div>
 
-
                 <div class="card item-estetica">
-                    <div class="card-img" onclick="abrirModal(this)"><img src="Blanqueamiento.png" alt="Diseño de Sonrisa"></div>
+                    <div class="card-img" onclick="abrirModal(this)"><img src="Blanqueamiento.png" alt="Blanqueamiento"></div>
                     <h3>Blanqueamiento</h3>
                     <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
-                    <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
-                    <button onclick="abrirModalCita('Diseño de Sonrisa')" class="btn-wa-card">
+                    <div class="price-container"><div class="price">S/ 100 <span>(Desde)</span></div></div>
+                    <button onclick="abrirModalCita('Blanqueamiento')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
                         <span class="number"><i class="fa-regular fa-calendar-check"></i> Reserva tu Cita</span>
                     </button>
                 </div>
 
-
                 <div class="card item-estetica">
-                    <div class="card-img" onclick="abrirModal(this)"><img src="Endodoncia c  especializado.png" alt="Diseño de Sonrisa"></div>
+                    <div class="card-img" onclick="abrirModal(this)"><img src="Endodoncia c  especializado.png" alt="Endodoncia"></div>
                     <h3>Endodoncia c/ especializado</h3>
                     <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
-                    <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
-                    <button onclick="abrirModalCita('Diseño de Sonrisa')" class="btn-wa-card">
+                    <div class="price-container"><div class="price">S/ 300 <span>(Desde)</span></div></div>
+                    <button onclick="abrirModalCita('Endodoncia')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
                         <span class="number"><i class="fa-regular fa-calendar-check"></i> Reserva tu Cita</span>
                     </button>
                 </div>
 
-
                 <div class="card item-estetica">
-                    <div class="card-img" onclick="abrirModal(this)"><img src="Extracción dental sin dolor.png" alt="Diseño de Sonrisa"></div>
-                    <h3>Extracción dental sin dolor</h3>
+                    <div class="card-img" onclick="abrirModal(this)"><img src="Extracción dental sin dolor.png" alt="Extracción"></div>
+                    <h3>Extracción dental sin Dolor</h3>
                     <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
-                    <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
-                    <button onclick="abrirModalCita('Diseño de Sonrisa')" class="btn-wa-card">
+                    <div class="price-container"><div class="price">S/ 50 <span>(Desde)</span></div></div>
+                    <button onclick="abrirModalCita('Extracción')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
                         <span class="number"><i class="fa-regular fa-calendar-check"></i> Reserva tu Cita</span>
                     </button>
                 </div>
 
                 <div class="card item-estetica">
-                    <div class="card-img" onclick="abrirModal(this)"><img src="Limpieza Dental.png" alt="Diseño de Sonrisa"></div>
-                    <h3>Limpieza Dental</h3>
+                    <div class="card-img" onclick="abrirModal(this)"><img src="Limpieza Dental.png" alt="Limpieza Dental"></div>
+                    <h3>Limpieza Dental Profunda</h3>
                     <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
-                    <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
-                    <button onclick="abrirModalCita('Diseño de Sonrisa')" class="btn-wa-card">
+                    <div class="price-container"><div class="price">S/ 150 <span>(Desde)</span></div></div>
+                    <button onclick="abrirModalCita('Limpieza Dental')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
                         <span class="number"><i class="fa-regular fa-calendar-check"></i> Reserva tu Cita</span>
                     </button>
                 </div>
 
-
                 <div class="card item-estetica">
-                    <div class="card-img" onclick="abrirModal(this)"><img src="Odontopediatría (Atención para niños).jpg" alt="Diseño de Sonrisa"></div>
+                    <div class="card-img" onclick="abrirModal(this)"><img src="Odontopediatría (Atención para niños).jpg" alt="Odontopediatría"></div>
                     <h3>Odontopediatría (Atención para niños)</h3>
                     <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
                     <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
-                    <button onclick="abrirModalCita('Diseño de Sonrisa')" class="btn-wa-card">
+                    <button onclick="abrirModalCita('Odontopediatría')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
                         <span class="number"><i class="fa-regular fa-calendar-check"></i> Reserva tu Cita</span>
                     </button>
                 </div>
 
                 <div class="card item-estetica">
-                    <div class="card-img" onclick="abrirModal(this)"><img src="protesis dental.jpg" alt="Diseño de Sonrisa"></div>
+                    <div class="card-img" onclick="abrirModal(this)"><img src="protesis dental.jpg" alt="Prótesis Estética"></div>
                     <h3>Prótesis Estética</h3>
                     <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
                     <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
-                    <button onclick="abrirModalCita('Diseño de Sonrisa')" class="btn-wa-card">
+                    <button onclick="abrirModalCita('Prótesis Estética')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
                         <span class="number"><i class="fa-regular fa-calendar-check"></i> Reserva tu Cita</span>
                     </button>
@@ -562,10 +670,10 @@
 
                 <div class="card item-estetica">
                     <div class="card-img" onclick="abrirModal(this)"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=500&q=80" alt="Blanqueamiento Láser"></div>
-                    <h3>Blanqueamiento Láser</h3>
-                    <p>Aclara varios tonos en una sesión de 45 minutos sin dañar tu esmalte.</p>
-                    <div class="price-container"><div class="price">S/ 250 <span>(Sesión)</span></div></div>
-                    <button onclick="abrirModalCita('Blanqueamiento Láser')" class="btn-wa-card">
+                    <h3>Implantes Dentales</h3>
+                    <p>Carillas estéticas de alta gama computarizadas para transformar tu rostro.</p>
+                    <div class="price-container"><div class="price">S/ 500 <span>(Desde)</span></div></div>
+                    <button onclick="abrirModalCita('Implantes Dentales')" class="btn-wa-card">
                         <span class="text">VÍA WHATSAPP</span>
                         <span class="number"><i class="fa-regular fa-calendar-check"></i> Reserva tu Cita</span>
                     </button>
@@ -577,12 +685,12 @@
 
     <div id="vista-experiencia" class="vista-app">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <span class="section-subtitle">Resultados Reales</span>
                 <h2 class="section-title font-serif">Arte en tu Sonrisa</h2>
             </div>
             
-            <div class="ba-container">
+            <div class="ba-container reveal">
                 <img src="">
                 <img src="5b3e7f9d-84e1-4655-a45b-8907d001817b.png" alt="Antes" class="ba-img-before" id="baImageBefore">
                 <input type="range" min="0" max="100" value="50" class="ba-slider" oninput="updateSlider(this)">
@@ -590,44 +698,17 @@
                 <div class="ba-labels"><span class="ba-label">Antes</span><span class="ba-label">Después</span></div>
             </div>
 
-            <div class="galeria-casos">
+            <div class="galeria-casos reveal">
                 <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia">
+                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia Estética">
                     <div class="caso-titulo">Ortodoncia Estética</div>
                 </div>
-
                 <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia">
+                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia Estética">
                     <div class="caso-titulo">Ortodoncia Estética</div>
                 </div>
-
                 <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia">
-                    <div class="caso-titulo">Ortodoncia Estética</div>
-                </div>
-
-                <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia">
-                    <div class="caso-titulo">Ortodoncia Estética</div>
-                </div>
-
-                <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia">
-                    <div class="caso-titulo">Ortodoncia Estética</div>
-                </div>
-
-                <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia">
-                    <div class="caso-titulo">Ortodoncia Estética</div>
-                </div>
-
-                <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=600&q=80" alt="Ortodoncia">
-                    <div class="caso-titulo">Ortodoncia Estética</div>
-                </div>
-                
-                <div class="caso-item" onclick="abrirModal(this)">
-                    <img src="Rehabilitación Oral.jpg" alt="Limpieza">
+                    <img src="Rehabilitación Oral.jpg" alt="Rehabilitación Oral">
                     <div class="caso-titulo">Rehabilitación Oral</div>
                 </div>
             </div>
@@ -636,73 +717,70 @@
 
     <div id="vista-videos" class="vista-app">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <span class="section-subtitle">Multimedia</span>
-                <h2 class="section-title font-serif">Nuestros Procesos</h2>
+                <h2 class="section-title font-serif">Nuestros Casos en Video</h2>
             </div>
             
-            <div class="video-grid">
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <video controls poster="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=600&q=80">
-                            <source src="https://assets.mixkit.co/videos/preview/mixkit-dentist-examining-a-patients-teeth-416-large.mp4" type="video/mp4">
-                        </video>
+            <div class="video-grid reveal">
+                
+                <div class="video-reel-card" onclick="abrirModalVideo('video1.mp4')">
+                    <img src="imagen1.png" alt="Diseño de Sonrisa" class="reel-thumbnail" onerror="this.src='https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=500&q=80'">
+                    
+                    <div class="reel-overlay">
+                        <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                        <div class="reel-info">
+                            <h3>Diseño de Sonrisa</h3>
+                            <p>Proceso en vivo</p>
+                        </div>
                     </div>
-                    <div class="video-info">
-                        <h3>Diseño de Sonrisa en Vivo</h3>
-                        <p>Observa cómo transformamos la seguridad de nuestros pacientes paso a paso.</p>
+                </div>
+                
+                <div class="video-reel-card" onclick="abrirModalVideo('video 2.mp4')">
+                    <img src="imagen2.png" alt="Carillas de Resina" class="reel-thumbnail" onerror="this.src='https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=500&q=80'">
+                    <div class="reel-overlay">
+                        <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                        <div class="reel-info">
+                            <h3>Carillas Dentales</h3>
+                            <p>Transformación real</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <video controls poster="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=600&q=80">
-                            <source src="https://assets.mixkit.co/videos/preview/mixkit-dentist-examining-a-patients-teeth-416-large.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="video-info">
-                        <h3>Diseño de Sonrisa en Vivo</h3>
-                        <p>Observa cómo transformamos la seguridad de nuestros pacientes paso a paso.</p>
-                    </div>
-                </div>
-
-
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <video controls poster="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=600&q=80">
-                            <source src="https://assets.mixkit.co/videos/preview/mixkit-dentist-examining-a-patients-teeth-416-large.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="video-info">
-                        <h3>Diseño de Sonrisa en Vivo</h3>
-                        <p>Observa cómo transformamos la seguridad de nuestros pacientes paso a paso.</p>
+                <div class="video-reel-card" onclick="abrirModalVideo('video3.mp4')">
+                    <img src="imagen3.png" alt="Blanqueamiento" class="reel-thumbnail" onerror="this.src='https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=500&q=80'">
+                    <div class="reel-overlay">
+                        <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                        <div class="reel-info">
+                            <h3>Blanqueamiento Láser</h3>
+                            <p>Resultados inmediatos</p>
+                        </div>
                     </div>
                 </div>
 
-
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <video controls poster="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80">
-                            <source src="https://assets.mixkit.co/videos/preview/mixkit-dental-instruments-in-a-clinic-415-large.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="video-info">
-                        <h3>Alta Tecnología Dental</h3>
-                        <p>Conoce los equipos de última generación que utilizamos en cada consulta.</p>
+                <div class="video-reel-card" onclick="abrirModalVideo('video4.mp4')">
+                    <img src="imagen4.png" alt="Tecnología Dental" class="reel-thumbnail" onerror="this.src='https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=500&q=80'">
+                    <div class="reel-overlay">
+                        <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                        <div class="reel-info">
+                            <h3>Alta Tecnología</h3>
+                            <p>Equipos de vanguardia</p>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 
     <div id="vista-clinica" class="vista-app">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <span class="section-subtitle">Visítanos</span>
                 <h2 class="section-title font-serif">Nuestra Clínica</h2>
             </div>
             
-            <div class="clinica-grid">
+            <div class="clinica-grid reveal">
                 <div class="info-clinica">
                     <h3 class="font-serif">Dental Dr. Rev</h3>
                     
@@ -755,6 +833,16 @@
         <img class="modal-content" id="imgAmpliada" onclick="event.stopPropagation()" alt="Ampliada">
     </div>
 
+    <div id="videoModal" class="modal" onclick="cerrarModalVideo()">
+        <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-video-content" onclick="event.stopPropagation()">
+            <video id="reproductorVideo" controls controlsList="nodownload">
+                <source src="" type="video/mp4">
+                Tu navegador no soporta la etiqueta de video.
+            </video>
+        </div>
+    </div>
+
     <div id="modalCita" class="modal-form-overlay" onclick="cerrarModalCita(event)">
         <div class="modal-form-content" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -790,118 +878,179 @@
     </div>
 
     <script>
-        // 1. Slider interactivo de Antes y Después (Clip-Path)
+        // --- 1. LÓGICA DE PARALLAX Y EFECTOS MODO PRO ---
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768 && document.getElementById('vista-inicio').classList.contains('activa')) {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            }
+        });
+
+        function animateParallax() {
+            if (window.innerWidth > 768 && document.getElementById('vista-inicio').classList.contains('activa')) {
+                const scrolled = window.scrollY;
+                currentX += (mouseX - currentX) * 0.1;
+                currentY += (mouseY - currentY) * 0.1;
+
+                const heroImg = document.querySelector('.hero-image');
+                const heroText = document.querySelector('.hero-text');
+                const bgShape = document.querySelector('.parallax-bg-shape');
+
+                if (heroImg) { heroImg.style.transform = `translateY(${scrolled * 0.15}px) translate(${-currentX * 15}px, ${-currentY * 15}px)`; }
+                if (heroText) { heroText.style.transform = `translateY(${scrolled * 0.05}px) translate(${currentX * 10}px, ${currentY * 10}px)`; }
+                if (bgShape) { bgShape.style.transform = `translateY(${scrolled * 0.3}px) translate(${currentX * 30}px, ${currentY * 30}px) scale(${1 + scrolled * 0.001})`; }
+            }
+            requestAnimationFrame(animateParallax);
+        }
+        animateParallax();
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // --- 2. LÓGICA ORIGINAL DE LA APP ---
         function updateSlider(elem) {
             const val = elem.value;
             document.getElementById('baImageBefore').style.clipPath = `polygon(0 0, ${val}% 0, ${val}% 100%, 0 100%)`;
             document.getElementById('baSliderBtn').style.left = `${val}%`;
         }
 
-        // 2. Navegación tipo App (Single Page Application)
         function cambiarVista(idVista) {
-            // Ocultar todas las vistas
             document.querySelectorAll('.vista-app').forEach(v => v.classList.remove('activa'));
-            // Mostrar la vista seleccionada
             document.getElementById(idVista).classList.add('activa');
 
-            // Actualizar botones activos
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('activa'));
             document.querySelectorAll(`[onclick="cambiarVista('${idVista}')"]`).forEach(btn => btn.classList.add('activa'));
 
-            // Subir al principio de la página suavemente
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Si el menú móvil está abierto, cerrarlo
             if(document.getElementById('mobileMenu').classList.contains('active')) { 
                 toggleMenu(); 
             }
         }
 
-        // 3. Pantalla de carga (Splash) y configuración de fecha mínima
         window.addEventListener('load', function() {
             setTimeout(() => {
                 document.getElementById('splash-screen').classList.add('slide-up');
-            }, 1200); // 1.2 segundos de pantalla de carga
+                setTimeout(() => { document.body.classList.add('loaded'); }, 300);
+            }, 1200); 
             
-            // Evitar que elijan fechas pasadas en el formulario
             const tzoffset = (new Date()).getTimezoneOffset() * 60000; 
             const hoy = (new Date(Date.now() - tzoffset)).toISOString().split('T')[0];
             document.getElementById('citaFecha').setAttribute('min', hoy);
+            
+            setTimeout(() => { window.dispatchEvent(new Event('scroll')); }, 1300);
         });
 
-        // 4. Abrir/Cerrar Menú Lateral Móvil
         function toggleMenu() {
             document.getElementById('mobileMenu').classList.toggle('active');
             document.getElementById('menuOverlay').classList.toggle('active');
         }
 
-        // 5. Filtros del Catálogo
         function filterCatalog(categoria) {
-            // Estilo visual del botón
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.currentTarget.classList.add('active');
             
-            // Mostrar/Ocultar tarjetas
             document.querySelectorAll('.card').forEach(tarjeta => {
                 if (categoria === 'todo' || tarjeta.classList.contains('item-' + categoria)) {
                     tarjeta.classList.remove('hide');
+                    tarjeta.style.animation = 'none';
+                    tarjeta.offsetHeight; 
+                    tarjeta.style.animation = null; 
                 } else { 
                     tarjeta.classList.add('hide'); 
                 }
             });
         }
 
-        // 6. Ampliar Imágenes al hacer click
+        // Modales de Imagen
         function abrirModal(el) {
             document.getElementById("imgAmpliada").src = el.querySelector('img').src;
             document.getElementById("imageModal").classList.add("active");
-            document.body.style.overflow = "hidden"; // Bloquea el scroll del fondo
+            document.body.style.overflow = "hidden"; 
         }
         function cerrarModal() { 
             document.getElementById("imageModal").classList.remove("active"); 
-            document.body.style.overflow = "auto"; // Restaura el scroll
+            document.body.style.overflow = "auto"; 
         }
 
-        // 7. Modal de Agendar Cita
+        // --- NUEVA LÓGICA: MODAL DE VIDEOS ---
+        function abrirModalVideo(videoSrc) {
+            const modal = document.getElementById("videoModal");
+            const reproductor = document.getElementById("reproductorVideo");
+            
+            // Asignar el src del video
+            reproductor.src = videoSrc;
+            
+            // Mostrar modal
+            modal.classList.add("active");
+            document.body.style.overflow = "hidden"; // Bloquea el scroll del fondo
+            
+            // Reproducir automáticamente al abrir
+            reproductor.play();
+        }
+
+        function cerrarModalVideo() {
+            const modal = document.getElementById("videoModal");
+            const reproductor = document.getElementById("reproductorVideo");
+            
+            // Ocultar modal
+            modal.classList.remove("active");
+            document.body.style.overflow = "auto"; // Devuelve el scroll
+            
+            // Pausar y resetear el video para que no suene de fondo
+            reproductor.pause();
+            reproductor.currentTime = 0;
+            reproductor.src = "";
+        }
+
+        // Modal de Citas
         function abrirModalCita(servicio = "") {
-            document.getElementById('citaTratamiento').value = servicio; // Auto-selecciona el tratamiento si viene del catálogo
+            document.getElementById('citaTratamiento').value = servicio; 
             document.getElementById('modalCita').classList.add('active');
             document.body.style.overflow = "hidden";
         }
         
         function cerrarModalCita(e) {
-            // Cierra si se hace click en la "X" o fuera del recuadro blanco
             if(!e || e.target.classList.contains('modal-form-overlay')) {
                 document.getElementById('modalCita').classList.remove('active');
                 document.body.style.overflow = "auto";
             }
         }
 
-        // 8. Procesar Cita y Enviar a WhatsApp
         function procesarCita(e) {
             e.preventDefault(); 
             
-            // Recolectar datos
             const nombre = document.getElementById('citaNombre').value;
             const tratamiento = document.getElementById('citaTratamiento').value;
             const fechaVal = document.getElementById('citaFecha').value;
             const hora = document.getElementById('citaHora').value;
             
-            // Formatear fecha (De YYYY-MM-DD a DD/MM/YYYY)
             let fecha = fechaVal;
             if(fechaVal) {
                 const p = fechaVal.split('-');
                 fecha = `${p[2]}/${p[1]}/${p[0]}`;
             }
 
-            // Crear el mensaje formateado para WhatsApp
             const msj = `¡Hola Clínica Manchay! 👋%0AQuiero agendar una cita.%0A%0A👤 *Paciente:* ${nombre}%0A🦷 *Tratamiento:* ${tratamiento}%0A📅 *Fecha:* ${fecha}%0A⏰ *Turno:* ${hora}%0A%0A¿Me confirman disponibilidad por favor?`;
             
-            // Abrir WhatsApp con el número del Dr. Rev
             const numeroTelefono = "51923028440"; 
             window.open(`https://wa.me/${numeroTelefono}?text=${msj}`, '_blank');
             
-            // Cerrar modal y limpiar formulario
             cerrarModalCita(); 
             e.target.reset();
         }
