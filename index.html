@@ -329,22 +329,21 @@
         /* ==========================================================================
            11. VISTA 4: LA CLÍNICA (MAPS Y CONTACTO) - DISEÑO SEPARADO
            ========================================================================== */
-        /* Estilos para Pantallas Grandes (Dos Columnas Separadas) */
         .clinica-grid { 
             display: flex; 
-            align-items: stretch; /* Asegura que ambos tengan buena altura */
+            align-items: stretch;
             justify-content: space-between;
             max-width: 1100px; 
             margin: 0 auto 50px; 
-            gap: 40px; /* Separación clara entre la tarjeta y el mapa */
+            gap: 40px;
         }
         
         .info-clinica { 
-            width: 40%; /* Toma un porcentaje menor para dejar espacio al mapa */
+            width: 40%;
             background: var(--white); 
             padding: 40px; 
             border-radius: 30px; 
-            box-shadow: var(--shadow-soft); /* Sombra suave, sin superponer */
+            box-shadow: var(--shadow-soft);
             border: 1px solid #f1f5f9; 
             display: flex; 
             flex-direction: column; 
@@ -358,7 +357,7 @@
         .info-text p { font-size: 16px; color: var(--secondary-navy); font-weight: 600;}
         
         .map-container { 
-            width: 55%; /* Toma el resto del espacio */
+            width: 55%;
             min-height: 400px; 
             border-radius: 30px; 
             border: 6px solid var(--white); 
@@ -393,10 +392,18 @@
         .btn-submit-form:active { transform: scale(0.98); }
 
         /* ==========================================================================
-           13. FOOTER Y BOTÓN FLOTANTE
+           13. FOOTER Y BOTONES FLOTANTES
            ========================================================================== */
+        /* Botón WhatsApp original */
         .btn-flotante { position: fixed; bottom: 30px; right: 30px; background: var(--whatsapp); color: var(--white); width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 35px; box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4); z-index: 99; cursor: pointer; animation: pulseWa 2s infinite; transition: var(--transition);}
+        @keyframes pulseWa { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
         .btn-flotante:hover { transform: scale(1.1); }
+        
+        /* NUEVO: Botón de Audio Flotante */
+        .btn-flotante-audio { position: fixed; bottom: 110px; right: 35px; background: var(--secondary-navy); color: var(--white); width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 22px; box-shadow: 0 10px 25px rgba(27, 54, 93, 0.3); z-index: 99; cursor: pointer; transition: var(--transition);}
+        .btn-flotante-audio:hover { transform: scale(1.1); background: var(--primary-teal); }
+        .btn-flotante-audio.playing { background: var(--primary-teal); }
+
         footer { background: var(--secondary-navy); color: var(--white); text-align: center; padding: 30px 20px; font-size: 14px; font-weight: 500; width: 100%; border-radius: 30px 30px 0 0;}
 
         /* ==========================================================================
@@ -408,14 +415,12 @@
             .hero-text h2 { font-size: 48px; }
             .video-grid { grid-template-columns: repeat(2, 1fr); gap: 20px;}
             
-            /* Ajuste intermedio para la clínica */
             .clinica-grid { flex-direction: column; gap: 30px; }
             .info-clinica, .map-container { width: 100%; }
             .map-container { min-height: 400px; }
         }
 
         @media (max-width: 768px) {
-            /* Ajustes Intro Móvil */
             .intro-logo { font-size: 38px; }
             .intro-doctor { width: 130px; height: 130px; margin-bottom: 20px; }
             .bg-video-wrapper { inset: -10%; width: 120%; height: 120%; } 
@@ -455,29 +460,18 @@
             .galeria-casos { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px 40px;}
             .caso-item { border-radius: 20px; }
             
-            /* CLÍNICA PARA MÓVILES (Columna, sin solapar) */
-            .clinica-grid { 
-                flex-direction: column; 
-                padding: 0 15px 40px; 
-                gap: 25px; /* Espacio limpio entre ambos bloques */
-            }
-            .info-clinica { 
-                width: 100%; 
-                padding: 30px 20px; 
-                border-radius: 24px; 
-            }
+            .clinica-grid { flex-direction: column; padding: 0 15px 40px; gap: 25px; }
+            .info-clinica { width: 100%; padding: 30px 20px; border-radius: 24px; }
             .info-clinica h3 { font-size: 26px; margin-bottom: 25px;}
             .info-item { gap: 15px; margin-bottom: 20px;}
             .info-icon { width: 45px; height: 45px; font-size: 20px;}
             
-            .map-container { 
-                width: 100%; 
-                height: 350px; 
-                border-radius: 24px; 
-                border-width: 4px; 
-            }
+            .map-container { width: 100%; height: 350px; border-radius: 24px; border-width: 4px; }
 
             .btn-flotante { width: 55px; height: 55px; font-size: 30px; bottom: 20px; right: 20px; }
+            /* Ajuste del botón de audio en móvil */
+            .btn-flotante-audio { width: 45px; height: 45px; font-size: 18px; bottom: 85px; right: 25px; }
+            
             footer { border-radius: 0; padding: 25px 15px; font-size: 12px;}
             .form-body { padding: 25px 20px;}
             .modal-header { padding: 20px; }
@@ -733,7 +727,7 @@
             </div>
             
             <div class="ba-container reveal">
-                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=900&q=80" alt="Después">
+                <img src="" alt="Después">
                 <img src="5b3e7f9d-84e1-4655-a45b-8907d001817b.png" alt="Antes" class="ba-img-before" id="baImageBefore" onerror="this.src='https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=900&q=80'">
                 <input type="range" min="0" max="100" value="50" class="ba-slider" oninput="updateSlider(this)">
                 <div class="ba-slider-btn" id="baSliderBtn"><i class="fa-solid fa-arrows-left-right"></i></div>
@@ -887,6 +881,10 @@
         © 2026 Dental Dr. Rev. Todos los derechos reservados.
     </footer>
 
+    <div id="btn-audio" class="btn-flotante-audio" onclick="toggleAudio()" title="Activar/Desactivar Sonido">
+        <i class="fa-solid fa-volume-xmark" id="icono-audio"></i>
+    </div>
+
     <div onclick="abrirModalCita()" class="btn-flotante" title="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </div>
@@ -941,7 +939,7 @@
     </div>
 
     <script>
-        // --- VARIABLES DE AUDIO MODO PRO ---
+        // --- VARIABLES DE AUDIO ---
         const audioFondo = new Audio('https://cdn.pixabay.com/audio/2022/11/22/audio_febc508520.mp3');
         audioFondo.loop = true;
         audioFondo.volume = 0.3;
@@ -949,13 +947,62 @@
         const audioClickPro = new Audio('https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a73467.mp3');
         audioClickPro.volume = 0.8;
 
-        window.addEventListener('click', function initAudio() {
-            if(document.getElementById('cinematic-intro').style.display !== 'none') {
-                audioFondo.play().catch(e => console.log("Audio de fondo en espera de interacción."));
-            }
-            window.removeEventListener('click', initAudio);
-        }, { once: true });
+        const btnAudio = document.getElementById('btn-audio');
+        const iconoAudio = document.getElementById('icono-audio');
 
+        // NUEVO: Intentar reproducir apenas se abre la página
+        window.addEventListener('load', function() {
+            audioFondo.play().then(() => {
+                // Si el navegador lo permite sin clics, excelente
+                actualizarBotonAudio(true);
+            }).catch(e => {
+                // Si lo bloquea, se queda muteado esperando
+                console.log("El navegador bloqueó el autoplay por seguridad. Esperando acción del usuario.");
+                actualizarBotonAudio(false);
+            });
+            
+            // Lógica para fecha de cita
+            const tzoffset = (new Date()).getTimezoneOffset() * 60000; 
+            const hoy = (new Date(Date.now() - tzoffset)).toISOString().split('T')[0];
+            document.getElementById('citaFecha').setAttribute('min', hoy);
+        });
+
+        // NUEVO: Función para el botón flotante de audio
+        function toggleAudio() {
+            if (audioFondo.paused) {
+                audioFondo.play();
+                actualizarBotonAudio(true);
+            } else {
+                audioFondo.pause();
+                actualizarBotonAudio(false);
+            }
+        }
+
+        // NUEVO: Función para cambiar el diseño del botón de audio
+        function actualizarBotonAudio(reproduciendo) {
+            if (reproduciendo) {
+                iconoAudio.classList.remove('fa-volume-xmark');
+                iconoAudio.classList.add('fa-volume-high');
+                btnAudio.classList.add('playing');
+            } else {
+                iconoAudio.classList.remove('fa-volume-high');
+                iconoAudio.classList.add('fa-volume-xmark');
+                btnAudio.classList.remove('playing');
+            }
+        }
+
+        // SILENCIAR AL CAMBIAR DE PESTAÑA O SALIR
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                audioFondo.pause();
+            } else {
+                // Solo reanudar si el botón indica que estaba encendido y ya pasó el intro
+                let intro = document.getElementById('cinematic-intro');
+                if ((intro.style.display === 'none' || intro.classList.contains('fade-out-pro')) && btnAudio.classList.contains('playing')) {
+                    audioFondo.play().catch(e => console.log(e));
+                }
+            }
+        });
 
         // --- LÓGICA DE PARALLAX ---
         let mouseX = 0, mouseY = 0;
@@ -1007,24 +1054,16 @@
         revealElements.forEach(el => revealOnScroll.observe(el));
 
         // --- LÓGICA DEL INTRO CINEMÁTICO AL CERRAR ---
-        window.addEventListener('load', function() {
-            const tzoffset = (new Date()).getTimezoneOffset() * 60000; 
-            const hoy = (new Date(Date.now() - tzoffset)).toISOString().split('T')[0];
-            document.getElementById('citaFecha').setAttribute('min', hoy);
-        });
-
         function cerrarIntro() {
             audioClickPro.currentTime = 0;
-            audioClickPro.play().catch(e => console.log("Sonido bloqueado por el navegador"));
+            audioClickPro.play().catch(e => console.log("Sonido bloqueado"));
             
-            let fadeAudio = setInterval(function () {
-                if (audioFondo.volume > 0.05) {
-                    audioFondo.volume -= 0.05;
-                } else {
-                    audioFondo.pause();
-                    clearInterval(fadeAudio);
-                }
-            }, 100);
+            // PLAN B INFALIBLE: Si el navegador bloqueó el autoplay inicial, aquí ya tenemos el permiso del clic
+            if (audioFondo.paused) {
+                audioFondo.play().then(() => {
+                    actualizarBotonAudio(true);
+                }).catch(e => console.log(e));
+            }
 
             const introDiv = document.getElementById('cinematic-intro');
             introDiv.classList.add('fade-out-pro');
@@ -1053,7 +1092,6 @@
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('activa'));
             document.querySelectorAll(`[onclick="cambiarVista('${idVista}')"]`).forEach(btn => btn.classList.add('activa'));
 
-            // Resetea el scroll al cambiar de pestaña para que el encabezado no se pierda
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             if(document.getElementById('mobileMenu').classList.contains('active')) { 
@@ -1082,7 +1120,6 @@
             });
         }
 
-        // Modales de Imagen
         function abrirModal(el) {
             document.getElementById("imgAmpliada").src = el.querySelector('img').src;
             document.getElementById("imageModal").classList.add("active");
@@ -1093,7 +1130,6 @@
             document.body.style.overflow = "auto"; 
         }
 
-        // Modal de Videos
         function abrirModalVideo(videoSrc) {
             const modal = document.getElementById("videoModal");
             const reproductor = document.getElementById("reproductorVideo");
@@ -1101,6 +1137,13 @@
             reproductor.src = videoSrc;
             modal.classList.add("active");
             document.body.style.overflow = "hidden"; 
+            
+            // Pausar música si estaba sonando para que no haya conflicto
+            if (!audioFondo.paused) {
+                audioFondo.pause();
+                actualizarBotonAudio(false);
+            }
+            
             reproductor.play();
         }
 
@@ -1116,7 +1159,6 @@
             reproductor.src = "";
         }
 
-        // Modal de Citas
         function abrirModalCita(servicio = "") {
             document.getElementById('citaTratamiento').value = servicio; 
             document.getElementById('modalCita').classList.add('active');
